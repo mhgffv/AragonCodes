@@ -7,19 +7,18 @@ public class EnemyScript : MonoBehaviour
     ScoreManager scoreManager;
     public ParticleSystem Explosion;
     public ParticleSystem HitExplosion;
-    [SerializeField] Transform parent;
+    [SerializeField] GameObject parent;
     int amount;
     int hp;
 
     void Start()
     {
-        scoreManager = FindObjectOfType<ScoreManager>();
         switch (gameObject.tag)
         {
             case "Enemy":
                 hp = 3;
             break;
-            
+
             case "MayorEnemy":
                 hp = 6;
             break;
@@ -28,7 +27,28 @@ public class EnemyScript : MonoBehaviour
                 hp = 20;
             break;
         }
+        scoreManager = FindObjectOfType<ScoreManager>();
+        parent = GameObject.FindWithTag("VFXparent");
+        //Sorter();
     }
+
+    /*void Sorter()
+    {
+        switch (gameObject.tag)
+        {
+            case "Enemy":
+                hp = 3;
+                break;
+
+            case "MayorEnemy":
+                hp = 6;
+                break;
+
+            case "MainEnemy":
+                hp = 20;
+                break;
+        }
+    }*/
 
     void OnParticleCollision(GameObject other)
     {        
@@ -41,15 +61,15 @@ public class EnemyScript : MonoBehaviour
 
     void EnemyDesapier()
     {
-        ParticleSystem vfx = Instantiate(Explosion, transform.position, Quaternion.identity);
-        vfx.transform.parent = parent;
         Destroy(gameObject);
+        ParticleSystem vfx = Instantiate(Explosion, transform.position, Quaternion.identity);
+        vfx.transform.parent = parent.transform;
     }
 
     void ScoreIncrease()
     {
-        ParticleSystem vfx = Instantiate(HitExplosion, transform.position, Quaternion.identity);
-        vfx.transform.parent = parent;
+        //ParticleSystem vfx = Instantiate(HitExplosion, transform.position, Quaternion.identity);
+        //vfx.transform.parent = parent.transform;
         hp--;
         switch (gameObject.tag)
         {
