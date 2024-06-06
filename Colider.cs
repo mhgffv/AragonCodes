@@ -54,6 +54,7 @@ public class Colider : MonoBehaviour
     void SuccesSecuence()
     {
         Debug.Log("Lo lograste");
+        GetComponent<PlayerMover>().enabled = false;
         Invoke("NextLevel", Retardtime);
     }
 
