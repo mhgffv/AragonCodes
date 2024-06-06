@@ -7,7 +7,7 @@ public class EnemyScript : MonoBehaviour
     ScoreManager scoreManager;
     public ParticleSystem Explosion;
     public ParticleSystem HitExplosion;
-    [SerializeField] transform parent;
+    [SerializeField] Transform parent;
     int amount;
     int hp;
 
@@ -41,16 +41,15 @@ public class EnemyScript : MonoBehaviour
 
     void EnemyDesapier()
     {
-        GameObject vfx = Instantiate(Explosion, transform.position, Quaternion.identity);
+        ParticleSystem vfx = Instantiate(Explosion, transform.position, Quaternion.identity);
         vfx.transform.parent = parent;
-        GetComponent<MeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
-        Explosion.Play();
+        Destroy(gameObject);
     }
 
     void ScoreIncrease()
     {
-        HitExplosion.Play();
+        ParticleSystem vfx = Instantiate(HitExplosion, transform.position, Quaternion.identity);
+        vfx.transform.parent = parent;
         hp--;
         switch (gameObject.tag)
         {
