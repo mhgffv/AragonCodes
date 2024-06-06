@@ -7,48 +7,17 @@ public class EnemyScript : MonoBehaviour
     ScoreManager scoreManager;
     public ParticleSystem Explosion;
     public ParticleSystem HitExplosion;
-    [SerializeField] GameObject parent;
-    int amount;
+    GameObject parent;
+    int Hitamount;
+    int Killamount;
     int hp;
 
     void Start()
     {
-        switch (gameObject.tag)
-        {
-            case "Enemy":
-                hp = 3;
-            break;
-
-            case "MayorEnemy":
-                hp = 6;
-            break;
-
-            case "MainEnemy":
-                hp = 20;
-            break;
-        }
+        Sorter();
         scoreManager = FindObjectOfType<ScoreManager>();
         parent = GameObject.FindWithTag("VFXparent");
-        //Sorter();
     }
-
-    /*void Sorter()
-    {
-        switch (gameObject.tag)
-        {
-            case "Enemy":
-                hp = 3;
-                break;
-
-            case "MayorEnemy":
-                hp = 6;
-                break;
-
-            case "MainEnemy":
-                hp = 20;
-                break;
-        }
-    }*/
 
     void OnParticleCollision(GameObject other)
     {        
@@ -59,31 +28,42 @@ public class EnemyScript : MonoBehaviour
         }
     }
 
+    void ScoreIncrease()
+    {
+        hp--;
+        scoreManager.plusScore(Hitamount);
+        ParticleSystem vfx = Instantiate(HitExplosion, transform.position, Quaternion.identity);
+        vfx.transform.parent = parent.transform;
+    }
+
     void EnemyDesapier()
     {
+        scoreManager.plusScore(Killamount);
         Destroy(gameObject);
         ParticleSystem vfx = Instantiate(Explosion, transform.position, Quaternion.identity);
         vfx.transform.parent = parent.transform;
     }
-
-    void ScoreIncrease()
+    void Sorter()
     {
-        //ParticleSystem vfx = Instantiate(HitExplosion, transform.position, Quaternion.identity);
-        //vfx.transform.parent = parent.transform;
-        hp--;
         switch (gameObject.tag)
         {
             case "Enemy":
-                amount = 5;
-                break;
+                hp = 3;
+                Hitamount = 5;
+                Killamount = 20;
+            break;
 
             case "MayorEnemy":
-                amount = 15;
+                hp = 5;
+                Hitamount = 15;
+                Killamount = 50;
             break;
+
             case "MainEnemy":
-                amount = 30;
+                hp = 20;
+                Hitamount = 30;
+                Killamount = 300;
             break;
         }
-        scoreManager.plusScore(amount);
     }
 }
