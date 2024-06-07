@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class Colider : MonoBehaviour
 {
-
     public ParticleSystem LoseParticles;
 
     float Retardtime = 1f;
@@ -19,15 +18,7 @@ public class Colider : MonoBehaviour
         {
             switch(other.gameObject.tag)
             {
-                case "Enemy":
-                    CrashSecuence();
-                break;
-
-                case "MayorEnemy":
-                    CrashSecuence();
-                break;
-
-                case "MainEnemy":
+                default:
                     CrashSecuence();
                 break;
 

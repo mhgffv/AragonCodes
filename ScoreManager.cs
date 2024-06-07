@@ -10,7 +10,7 @@ public class ScoreManager : MonoBehaviour
     {
         Debug.Log(Score);
         scoreText = GetComponent<TMP_Text>();
-        scoreText.text = "Start";
+        scoreText.text = "Score:";
     }
 
     void Update()
