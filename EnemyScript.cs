@@ -5,17 +5,20 @@ using UnityEngine;
 public class EnemyScript : MonoBehaviour
 {
     ScoreManager scoreManager;
+    BossHPscript BossHPManager;
     public ParticleSystem Explosion;
     public ParticleSystem HitExplosion;
     GameObject parent;
     int Hitamount;
     int Killamount;
     int hp;
+    int BossHP;
 
     void Start()
     {
         Sorter();
         scoreManager = FindObjectOfType<ScoreManager>();
+        BossHPManager = FindObjectOfType<BossHPscript>();
         parent = GameObject.FindWithTag("VFXparent");
     }
 
@@ -30,6 +33,11 @@ public class EnemyScript : MonoBehaviour
 
     void ScoreIncrease()
     {
+        if (gameObject.tag == "MainEnemy")
+        {
+            BossHP--;
+            BossHPManager.MinusBossHP(BossHP);
+        }
         hp--;
         scoreManager.plusScore(Hitamount);
         ParticleSystem vfx = Instantiate(HitExplosion, transform.position, Quaternion.identity);
@@ -43,6 +51,7 @@ public class EnemyScript : MonoBehaviour
         ParticleSystem vfx = Instantiate(Explosion, transform.position, Quaternion.identity);
         vfx.transform.parent = parent.transform;
     }
+
     void Sorter()
     {
         switch (gameObject.tag)
@@ -61,6 +70,7 @@ public class EnemyScript : MonoBehaviour
 
             case "MainEnemy":
                 hp = 20;
+                BossHP = 20;
                 Hitamount = 30;
                 Killamount = 300;
             break;

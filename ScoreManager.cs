@@ -8,20 +8,13 @@ public class ScoreManager : MonoBehaviour
     TMP_Text scoreText;
     void Start()
     {
-        Debug.Log(Score);
         scoreText = GetComponent<TMP_Text>();
         scoreText.text = "Score:";
     }
 
-    void Update()
-    {
-
-    }
-
-    public void plusScore(int scoreAmount)
+    void plusScore(int scoreAmount)
     {
         Score += scoreAmount;
-        Debug.Log(Score);
         scoreText.text = $"Score: {Score}";
     }
 }
